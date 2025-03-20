@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace PTMKTestTask.Persistence;
 
@@ -30,6 +31,16 @@ public class EmployeeRepository
     public async Task<List<Employee>> GetNoRepitEmployees()
     {
         return await _context.Employees.GroupBy(m => new { m.FullName, m.Birthday }).Select(e => e.First()).ToListAsync();
+    }
+
+    public async Task<List<Employee>> GetEmployeeWhereFirstLetterF()
+    {
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
+        var result = await _context.Employees.Where(e => e.FullName.StartsWith("F") && e.Gender == Gender.Male).ToListAsync();
+        stopWatch.Stop();
+        Console.WriteLine(stopWatch.Elapsed);
+        return result;
     }
 
     public async Task CreateDBAsync()

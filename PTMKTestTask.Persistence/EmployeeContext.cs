@@ -7,7 +7,11 @@ public class EmployeeContext : DbContext
     public DbSet<Employee> Employees { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=fred;Database=postgres;");
+    {
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=fred;Database=postgres;");
+        //optionsBuilder.LogTo(Console.WriteLine);
+    }
+        
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

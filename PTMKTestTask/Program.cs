@@ -12,13 +12,14 @@ internal class Program
         
         int a = 0;
         
-        while (a>4 || a<=0) 
+        while (a>5 || a<=0) 
         {
             Console.WriteLine("Hello! enter number \n" +
                 "1: to create db \n" +
                 "2: to add employee \n" +
                 "3: get sorted employees \n" +
-                "4: add 1000000 employees + 100 employee is name start with f"
+                "4: add 1000000 employees + 100 employee is name start with f \n" +
+                "5: get employee is name start with f and gender male \n"
             );
 
             bool isParse = int.TryParse(Console.ReadLine(), out var number);
@@ -46,6 +47,9 @@ internal class Program
                 await _service.AddFakeEmployeesLastNameWithF();
                 await _service.AddFakeEmployees();
                 break;
+            case 5:
+                await _service.GetEmployeeWhereFirstLetterF();
+                    break;
             default:
                 Console.WriteLine("value is no valid");
                 break;

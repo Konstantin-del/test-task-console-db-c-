@@ -90,4 +90,14 @@ public class EmployeeService
         return age;
     }
 
+    public async Task GetEmployeeWhereFirstLetterF()
+    {
+        var employees = await _repository.GetEmployeeWhereFirstLetterF();
+
+        foreach (var employee in employees)
+        {
+            Console.WriteLine($"{employee.FullName}");
+        }
+    }
+
 }
