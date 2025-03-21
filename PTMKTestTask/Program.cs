@@ -1,18 +1,19 @@
 ﻿using PTMKTestTask.Persistence;
 using PTMKTestTask.Application;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace PTMKTestTask;
 
 internal class Program
 {
-    private static EmployeeService _service = new();
+    private readonly static EmployeeService service = new();
     static async Task Main(string[] args)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        
+        EmployeeService service = new();
         int a = 0;
-        
-        while (a>5 || a<=0) 
+
+        while (a > 5 || a <= 0)
         {
             Console.WriteLine("Hello! enter number \n" +
                 "1: to create db \n" +
@@ -32,24 +33,24 @@ internal class Program
         switch (a)
         {
             case 1:
-                await _service.CreateDBAsync();
+                await service.CreateDBAsync();
                 break;
             case 2:
                 var employee = CreateEmployee();
-                await _service.AddEmployeeAsync(employee);
-                var age = _service.CalculateAge(employee.Birthday);
+                await service.AddEmployeeAsync(employee);
+                var age = service.CalculateAge(employee.Birthday);
                 Console.WriteLine($"age: {age}");
                 break;
             case 3:
-                await _service.GetNoRepitEmployees();
+                await service.GetNoRepitEmployees();
                 break;
             case 4:
-                await _service.AddFakeEmployeesLastNameWithF();
-                await _service.AddFakeEmployees();
+                await service.AddFakeEmployeesLastNameWithF();
+                await service.AddFakeEmployees();
                 break;
             case 5:
-                await _service.GetEmployeeWhereFirstLetterF();
-                    break;
+                await service.GetEmployeeWhereFirstLetterF();
+                break;
             default:
                 Console.WriteLine("value is no valid");
                 break;
@@ -69,23 +70,23 @@ internal class Program
                 if (fullName.Length == 0) continue;
                 newEmployee.FullName = fullName;
             }
-            
+
             Console.WriteLine("enter your birthday, format: MM/dd/yyyy");
             var dateString = Console.ReadLine();
             DateTime parsedDate;
             bool isValidDate = DateTime.TryParse(dateString, out parsedDate);
-            if (!isValidDate) 
+            if (!isValidDate)
             {
                 Console.WriteLine("inwalid parse, enter again");
                 continue;
             }
             newEmployee.Birthday = parsedDate;
 
-            string gender="";
-            while(gender != "w" && gender != "m")
+            string gender = "";
+            while (gender != "w" && gender != "m")
             {
                 Console.WriteLine("enter your gender: w or m");
-                gender = Console.ReadLine();
+                gender = Console.ReadLine() ?? "";
             }
             newEmployee.Gender = gender == "w" ? Gender.Female : Gender.Male;
             isWhile = false;
@@ -93,3 +94,5 @@ internal class Program
         return newEmployee;
     }
 }
+   
+

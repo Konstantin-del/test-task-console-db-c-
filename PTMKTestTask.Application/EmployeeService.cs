@@ -3,7 +3,7 @@ using PTMKTestTask.Persistence;
 
 namespace PTMKTestTask.Application;
 
-public class EmployeeService
+public class EmployeeService 
 {
     private readonly EmployeeRepository _repository;
     public EmployeeService()
@@ -38,7 +38,6 @@ public class EmployeeService
             }
             await _repository.AddEmployeeListAsync(list);
             count += 5;
-            Console.WriteLine(count);
         }
     }
 
@@ -94,10 +93,10 @@ public class EmployeeService
     {
         var employees = await _repository.GetEmployeeWhereFirstLetterF();
 
-        foreach (var employee in employees)
-        {
-            Console.WriteLine($"{employee.FullName}");
-        }
+        //foreach (var employee in employees)
+        //{
+        //    Console.WriteLine($"{employee.FullName}");
+        //}
     }
 
 }
